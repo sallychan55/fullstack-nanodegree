@@ -4,28 +4,34 @@ import fresh_tomatoes
 # Movie information
 lala_land = media.Movie("La La Land", "American romantic musical comedy-drama film",
                         "https://upload.wikimedia.org/wikipedia/en/a/ab/La_La_Land_%28film%29.png",
-                        "https://www.youtube.com/watch?v=DBUXcNTjviI")
+                        "https://www.youtube.com/watch?v=DBUXcNTjviI",
+                        "89%")
 
 zootopia = media.Movie("Zootopia", "3D computer-animated comedy-adventure film",
                        "https://upload.wikimedia.org/wikipedia/en/e/ea/Zootopia.jpg",
-                       "https://www.youtube.com/watch?v=ns9kL1JILeo")
+                       "https://www.youtube.com/watch?v=ns9kL1JILeo",
+                       "94%")
 
 ghostbusters = media.Movie("Ghost Busters", "The story of four women who start a ghost-catching business in New York City",
                            "https://upload.wikimedia.org/wikipedia/en/3/32/Ghostbusters_2016_film_poster.png",
-                           "https://www.youtube.com/watch?v=w3ugHP-yZXw")
+                           "https://www.youtube.com/watch?v=w3ugHP-yZXw",
+                           "73%")
 
 toy_story = media.Movie("Toy Story", "A story of a boy and his toys that come to life",
                         "http://upload.wikimedia.org/wikipedia/en/1/13/Toy_Story.jpg",
-                        "https://www.youtube.com/watch?v=vwyZH85NQC4")
+                        "https://www.youtube.com/watch?v=vwyZH85NQC4",
+                        "95%")
 #print(toy_story.storyline)
 
 avatar = media.Movie("Avatar", "A marine on an alien planet",
                      "http://upload.wikimedia.org/wikipedia/id/b/b0/Avatar-Teaser-Poster.jpg",
-                     "http://www.youtube.come/watch?v=-9ceBgWV8io")
+                     "http://www.youtube.come/watch?v=-9ceBgWV8io",
+                     "88%")
 
-school_of_rock = media.Movie("School of Rock", "Storyline",
+school_of_rock = media.Movie("School of Rock", "A musical comedy film",
                              "http://upload.wikimedia.org/wikipedia/en/1/11/School_of_Rock_Poster.jpg",
-                             "htps://www.youtube.com/watch?v=3PsUJFEBC74")
+                             "htps://www.youtube.com/watch?v=3PsUJFEBC74",
+                             "97%")
 
 # Make a list of movies
 movies = [lala_land, zootopia, ghostbusters, toy_story, avatar, school_of_rock]
