@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-heading">
+  <h2>New post</h2>
+</div>
+
+<section class="post-content">
+  <form method="post">
+    <label class="input-area">
+      <h2>Subject</h2>
+      <input type="text" placeholder="Your subject is here!" name="subject" value="{{subject}}">
+    </label>
+
+    <label class="input-area">
+      <h2>Content</h2>
+      <textarea name="content" placeholder="Your content is here!">{{content}}</textarea>
+    </label>
+
+    <div class="error">{{error}}</div>
+
+    <input type="submit">
+  </form>
+</section>
+{% endblock %}

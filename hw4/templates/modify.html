@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if updated %}
+    <p>Post successfully updated.</p>
+{% endif %}
+
+<div class="post">
+  <div class="post-heading">
+    <div class="post-title">
+      {{p.subject}}
+    </div>
+
+    <div class="post-date">
+      {{p.created.strftime("%b %d, %Y")}}
+    </div>
+  </div>
+
+  <div class="">
+    <form method="post">
+	    {% if errors %}
+            <textarea name="content">{{content}}</textarea>
+        {% else %}    
+        	<textarea name="content" value={{content}}>{{p.content}}</textarea>
+        {% endif %}
+        	
+        <input type="hidden" name="key_id" value={{p.key().id()}}>
+        
+        <div class="error">{{error}}</div>
+
+        <input type="submit">
+    </form>
+  </div>
+</div> 
+{% endblock %}

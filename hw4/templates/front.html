@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if user %}
+<div class="newpost-heading">
+  <div class="newpost-right">
+    <a href="/blog/newpost">Click here to create a new Post :)</a>
+  </div>
+</div>
+{% endif %}
+
+{% if posts %}
+
+	{% for p in posts %}
+		{{p.render(user) | safe}}
+	{% endfor %}
+
+{% elif user %}
+
+	<p class="updated">No posts so far. Please create a new post!</p>
+
+{% else %}
+
+	<p class="updated">No posts so far. Please create a new post after signup!</p>
+
+{% endif%}
+
+{% endblock %}

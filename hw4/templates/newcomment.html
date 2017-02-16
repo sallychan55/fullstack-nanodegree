@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+<a href="blog/{{post_id}}">View Post</a>
+
+<form method="post">
+    <label>
+        <div>Comment</div>
+        <textarea name="comment">{{ comment }}</textarea>
+        {% if error %}
+            <div class="error">
+                Comment cannot be blank.
+            </div>
+        {% endif %}
+    </label>
+
+    <div>
+        <input type="submit">
+    </div>
+</form>

@@ -1,0 +1,243 @@
+body {
+    position: relative;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 15px;
+
+    width: 800px;
+    margin: 0 auto;
+    padding: 10px;
+    color: #333;
+}
+
+.link {
+    font-size: 15px;
+    position: relative;
+    top: 10px;
+}
+
+.input-area input[type="text"] {
+  padding: 10px;
+  border: none;
+  border-bottom: solid 2px #c9c9c9;
+  transition: border 0.3s;
+}
+
+.like-button
+{
+padding: 2px 10px 2px !important;
+font-size: 15px !important;
+background-color: #F36C8C;
+font-weight: bold;
+text-shadow: 1px 1px #F36C8C;
+color: #ffffff;
+border-radius: 100px;
+-moz-border-radius: 100px;
+-webkit-border-radius: 100px;
+border: 1px solid #F36C8C;
+cursor: pointer;
+box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+.unlike-button
+{
+padding: 2px 10px 2px !important;
+font-size: 15px !important;
+background-color: blue;
+font-weight: bold;
+text-shadow: 1px 1px blue;
+color: #ffffff;
+border-radius: 100px;
+-moz-border-radius: 100px;
+-webkit-border-radius: 100px;
+border: 1px solid blue;
+cursor: pointer;
+box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+-moz-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+-webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, 0.5) inset;
+}
+
+textarea {
+    width: 600px;
+    height: 200px;
+    font-size: 18px;
+    border: solid 2px #c9c9c9;
+    padding: 5px;
+}
+
+.login-area {
+    font-size: 13px;
+    color: gray;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.login-link {
+    color: gray;
+    text-decoration: none;
+}
+
+.login-link:visited {
+    color: gray;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.error {
+    color: red;
+}
+
+.warning {
+    color: red;
+}
+
+.liked-post {
+    color: #F36C8C;
+    font-weight: bold;
+}
+
+.updated {
+    color: green;
+    font-size: 25px;
+}
+
+label {
+  display: block;
+  font-size: 20px;
+}
+
+label + label {
+    margin-top: 20px;
+}
+
+input[type=text] {
+    width: 500px;
+    font-size: 20px;
+    padding: 2px;
+}
+
+
+.comment-form {
+  width: 400px;
+  height: 100px;
+  font-size: 17px;
+  border: solid 2px #c9c9c9;
+  padding: 5px;
+}
+
+.comment-input {
+    margin-bottom: 20px;
+}
+
+input[type=submit] {
+  font-size: 24px;
+}
+
+.main-title {
+    display: block;
+    color: #222;
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+    text-decoration: none;
+}
+
+.post + .post {
+    margin-top: 15px;
+}
+
+.post-heading {
+    position: relative;
+    border-bottom: 3px solid #666;
+}
+
+.post-title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.post-date {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    color: #999;
+
+}
+
+.post-content {
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.post-comment {
+    width: 200px;
+    margin-left: auto;
+}
+
+.comment {
+    margin-top: 15px;
+}
+
+.comment-author {
+    position: relative;
+    border-bottom: 3px solid #666;
+}
+
+.comment-body {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.comment-heading {
+    position: relative;
+    border-bottom: 3px solid white;
+    margin-top: 20px;
+}
+
+.comment-edit {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.comment-content {
+    margin-top: 45px;
+    margin-bottom: 20px;
+}
+
+.delete-post {
+    margin-top: 25px;
+}
+
+.like-button-heading {
+    position: relative;
+    margin-top: 35px;
+}
+
+.like-button-right {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+}
+
+.newpost-heading {
+    position: relative;
+    margin-top: 35px;
+}
+
+.newpost-right {
+    position: absolute;
+    right: 0px;
+    bottom: 3px;
+}

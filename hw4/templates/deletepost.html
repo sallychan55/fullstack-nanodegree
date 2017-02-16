@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-heading">
+  <h2>Delete post</h2>
+</div>
+
+{% if deleted %}
+
+    <p class="updated">Post has been deleted!</p>
+    <a class="link" href="/blog">Back to front page</a>
+
+{% else %}
+
+<a class="link" href="/blog/{{p.key.id()}}">Click here if you want to cancel deleting</a>
+
+<section class="delete-post">
+	<div class="post-heading">
+		<div class="post-title">
+			{{p.subject}}
+		</div>
+
+		<div class="post-date">
+			{{p.created.strftime("%b %d, %Y, %l:%M %p")}}
+		</div>
+	</div>
+
+	<div class="post-content">
+		{{p.content.replace('\n', '<br>') | safe}}
+	</div>
+</section>
+
+<form method="post">
+    <p class="warning">Are you sure to delete this post?</p>
+    <button type="submit">Delete</button>
+</form>
+{% endif %}
+
+{% endblock %}

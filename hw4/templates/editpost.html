@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-heading">
+  <h2>Edit post</h2>
+</div>
+
+{% if updated %}
+
+    <p class="updated">Post successfully updated!</p>
+    <a class="link" href="/blog/{{p.key.id()}}">View Post</a>
+
+{% else %}
+
+<a class="link" href="/blog/{{p.key.id()}}">Click here if you want to cancel editing</a>
+
+<section class="post-content">
+  <form method="post">
+    <label class="input-area">
+      <h2>Subject</h2>
+      {% if errors %}
+        <input type="text" name="subject" value="{{subject}}">
+      {% else %}
+        <input type="text" name="subject" value="{{p.subject}}">
+      {% endif %}
+    </label>  
+
+    <label class="input-area">
+      <h2>Content</h2>
+      {% if errors %}
+        <textarea name="content">{{content}}</textarea>
+      {% else %}    
+        <textarea name="content">{{p.content}}</textarea>
+      {% endif %}
+
+      <!-- <input type="hidden" name="key_id" value={{p.key.id()}}> -->
+      <div class="error">{{error}}</div>
+    </label>
+
+    <div>
+      <input type="submit" value="Edit"></input>
+    </div>  
+  </form>
+</section>
+{% endif %}
+{% endblock %}

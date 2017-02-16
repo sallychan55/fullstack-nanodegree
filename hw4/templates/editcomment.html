@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-heading">
+  <h2>Edit Comment</h2>
+</div>
+
+{% if updated %}
+  <p class="updated">Post successfully updated!</p>
+  <a class="link" href="/blog/{{comment.key.parent().id()}}">Back to front page</a> 
+
+{% else %}
+
+<a class="link" href="/blog/{{comment.key.parent().id()}}">Click here if you want to cancel editing</a> 
+
+<section class="comment-content">
+  <form method="post">
+    <label>
+      <div>Comment</div>
+      {% if errors %}
+        <textarea name="new_comment">{{comment}}</textarea>
+      {% else %}    
+        <textarea name="new_comment">{{comment.comment}}</textarea>
+      {% endif %}
+        
+      <div class="error">{{error}}</div>
+    </label>
+
+    <div>
+      <input type="submit" value="Edit"></input>
+    </div>     
+  </form>
+</section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="post-heading">
+  <h2>Delete Comment</h2>
+</div>
+
+{% if deleted %}
+
+	<p class="updated">Comment has been deleted!</p>
+	<a class="link" href="/blog/{{comment.key.parent().id()}}">Back to front</a> 
+
+{% else %}
+
+<a class="link" href="/blog/{{comment.key.parent().id()}}">Click here if you want to cancel deleting</a> 
+
+<section class="delete-post">
+	<div class="post-content">
+		{{comment.comment.replace('\n', '<br>') | safe}}
+	</div>
+</section>
+
+<form method="post">
+	<p class="warning">Are you sure to delete this comment?</p>
+    <input type="submit" value="Delete Comment">
+</form>
+
+{% endif %}
+{% endblock %}
