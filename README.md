@@ -4,7 +4,7 @@ Full Stack Nanodegree Project
 ## Table of contents
 - [Movies](#movies)
 - [Portfolio_Site](#portfolio_site)
-- [Multi_User_Blog](#munti_user_blog)
+- [Multi_User_Blog](#multi_user_blog)
 
 ## Movies
 This folder is for a project "Movie Trailer Website".
