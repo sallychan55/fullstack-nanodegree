@@ -16,14 +16,17 @@ The folder contains all codes for "Portfolio Site" project. Index.html shows the
 
 ## Multi_User_Blog
 This project codes are stored under hw4 folder.
-This project run on Google Cloud Platform. You can go to https://hello-world-sally-158219.appspot.com/blog to see the page.
+
+This project runs on Google Cloud Platform. You can visit [the page](https://hello-world-sally-158219.appspot.com) to see a sample.
 
 From the top page, a user can:
+
 1. view existing posts but cannot edit them until login
 2. create a new account (/signup)
 3. login (/login)
 
 After logged in, a user can:
+
 1. create a new post (/blog/newpost)
 2. edit/delete posts that are owned by the user
 3. create a new comment on posts
