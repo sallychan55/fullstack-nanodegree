@@ -5,12 +5,18 @@ from google.appengine.ext import ndb
 
 class EditComment(BlogHandler):
 	def get(self, comment_key):
+        if not self.user:
+            self.redirect("/login")
+
 		comment = ndb.Key(urlsafe=comment_key).get()	
 		self.render("editcomment.html", comment=comment)
 
 	def post(self, comment_key):
 		# TODO: is there any better way to get comment by id?
-		#comment = Comment.get_by_id(comment_id, parent=p_key)
+        # comment = Comment.get_by_id(comment_key, parent=p_key)
+
+        if not self.user:
+            self.redirect("/login")
 
 		new_comment = self.request.get("new_comment")
 		comment = ndb.Key(urlsafe=comment_key).get()	

@@ -3,15 +3,21 @@ from google.appengine.ext import ndb
 
 class EditPost(BlogHandler):
     def get(self, post_id):
+        if not self.user:
+            self.redirect("/login")
+
         post = ndb.Key('Post', int(post_id)).get()
         
         if not post:
             self.error(404)
-            return
-
+            return self.render("not_found.html")
+        
         self.render("editpost.html", p=post)
 
     def post(self, post_id):
+        if not self.user:
+            self.redirect("/login")
+
         subject = self.request.get('subject')
         content = self.request.get('content')
         key_id = self.request.get('key_id')

@@ -28,8 +28,11 @@ class MainPage(BlogHandler):
 
 class BlogFront(BlogHandler):
     def get(self):
-        posts = Post.query().order(-Post.created).fetch() 
-        self.render('front.html', posts = posts, user = self.user)
+        posts = Post.query().order(-Post.created).fetch()
+        if self.user:
+            self.render('front.html', posts=posts, user=self.user)
+        elif not self.user:
+            self.render('front.html', posts=posts)
    
 class PostPage(BlogHandler):
     def get(self, post_id):
@@ -37,7 +40,7 @@ class PostPage(BlogHandler):
         
         if not post:
             self.error(404)
-            return
+            return self.render("not_found.html")
 
         self.render("permalink.html", post = post, user = self.user)
 
@@ -45,12 +48,12 @@ class NewPost(BlogHandler):
     def get(self):
         if self.user:
             self.render("newpost.html")
-        else:
+        elif not self.user:
             self.redirect("/login") 
 
     def post(self):
         if not self.user:
-            self.redirect('/blog')
+            self.redirect('/login')
 
         subject = self.request.get('subject')
         content = self.request.get('content')
@@ -113,7 +116,7 @@ class Signup(BlogHandler):
 
 class Register(Signup):
     def done(self):
-        #make sure the user doesn't already exist
+        # make sure the user doesn't already exist
         u = User.by_name(self.username)
         if u:
             msg = 'That user already exists.'
@@ -123,7 +126,7 @@ class Register(Signup):
             u.put()
 
             self.login(u)
-            self.redirect('/blog') # TODO: shall we move to welcome page?
+            self.redirect('/')
 
 class Login(BlogHandler):
     def get(self):
@@ -136,7 +139,7 @@ class Login(BlogHandler):
         u = User.login(username, password) # Check username/password
         if u:
             self.login(u) # Set-Cookie
-            self.redirect('/blog')
+            self.redirect('/')
         else:
             msg = 'Invalid login'
             self.render('login-form.html', error = msg)
@@ -144,18 +147,17 @@ class Login(BlogHandler):
 class Logout(BlogHandler):
     def get(self):
         self.logout()
-        self.redirect('/blog')
+        self.redirect('/')
 
 class Welcome(BlogHandler):
     def get(self):
         if self.user:
-            self.render('welcome.html', username = self.user.name)
+            self.redirect('/blog')
         else:
             self.redirect('/signup')
 
-app = webapp2.WSGIApplication([('/', MainPage),
-                               ('/welcome', Welcome),
-                               ('/blog/?', BlogFront),
+
+app = webapp2.WSGIApplication([('/', BlogFront),
                                ('/blog/([0-9]+)', PostPage),
                                ('/blog/newpost', NewPost),
                                ('/signup', Register),
