@@ -112,6 +112,7 @@ h2 {
 }
 
 label {
+  margin-top: 10px;  
   display: block;
   font-size: 20px;
 }
@@ -126,6 +127,21 @@ input[type=text] {
     padding: 2px;
 }
 
+input[name=username] {
+    font-size: 15px;
+    width: 125px;
+    height: 13px;
+}
+
+input[name=email] {
+    font-size: 15px;
+    width: 125px;
+    height: 13px;
+}
+
+.submit {
+    margin-top: 20px;
+}
 
 .comment-form {
   width: 400px;

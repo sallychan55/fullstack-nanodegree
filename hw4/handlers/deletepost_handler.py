@@ -1,24 +1,14 @@
 from handlers.blog_handler import BlogHandler
+from modules.validation import user_owns_post
+
 from google.appengine.ext import ndb
 
 class DeletePost(BlogHandler):
-    def get(self, post_id):
-        if not self.user:
-            self.redirect("/login") 
-
-        key = ndb.Key('Post', int(post_id))
-        post = key.get()
-
-        if not post:
-            self.error(404)
-            return self.render("not_found.html")
-                
+    @user_owns_post
+    def get(self, post):
         self.render("deletepost.html", p=post)
 
-    def post(self, post_id):
-        if not self.user:
-            self.redirect("/login")
-
-        post= ndb.Key('Post', int(post_id)).get()
+    @user_owns_post
+    def post(self, post):
         post.delete()
         self.render("deletepost.html", p=post, deleted=True) 

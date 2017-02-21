@@ -1,27 +1,19 @@
 from handlers.blog_handler import BlogHandler
 from modules.comment import Comment
+from modules.validation import user_owns_comment
 
 from google.appengine.ext import ndb
 
 class EditComment(BlogHandler):
-	def get(self, comment_key):
-        if not self.user:
-            self.redirect("/login")
-
-		comment = ndb.Key(urlsafe=comment_key).get()	
+    @user_owns_comment
+    def get(self, comment):
 		self.render("editcomment.html", comment=comment)
 
-	def post(self, comment_key):
-		# TODO: is there any better way to get comment by id?
-        # comment = Comment.get_by_id(comment_key, parent=p_key)
-
-        if not self.user:
-            self.redirect("/login")
-
+    @user_owns_comment
+    def post(self, comment):
 		new_comment = self.request.get("new_comment")
-		comment = ndb.Key(urlsafe=comment_key).get()	
 
-		if new_comment and comment:
+    if new_comment:
 			comment.comment = new_comment
 			comment.put()
 			#comment.update(new_comment) <-- somehow it doesn't work to update data
