@@ -17,7 +17,7 @@ class EditComment(BlogHandler):
 			comment.comment = new_comment
 			comment.put()
 			#comment.update(new_comment) <-- somehow it doesn't work to update data
-			self.render("editcomment.html", comment=comment, updated=True)	
+			self.render("editcomment.html", comment=comment, updated=True)
 		else:
 			error = "Please add comment!"
 			self.render("editcomment.html", comment=comment, error=error)
