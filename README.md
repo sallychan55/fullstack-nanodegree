@@ -15,7 +15,7 @@ So that the page is came up and you can see movies and watch the trailers by cli
 The folder contains all codes for "Portfolio Site" project. Index.html shows the page.
 
 ## Multi_User_Blog
-This project codes are stored under hw4 folder.
+This project codes are stored under multi_user_blog folder.
 
 This project runs on Google Cloud Platform. You can visit [the page](https://hello-world-sally-158219.appspot.com) to see a sample.
 
