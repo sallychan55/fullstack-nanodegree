@@ -5,6 +5,7 @@ Full Stack Nanodegree Project
 - [Movies](#movies)
 - [Portfolio_Site](#portfolio_site)
 - [Multi_User_Blog](#multi_user_blog)
+- [Tournament](#tournament)
 
 ## Movies
 This folder is for a project "Movie Trailer Website".
@@ -34,4 +35,16 @@ After logged in, a user can:
 5. like/unlike other users' posts
 6. logout (/logout)
 
+## Tournament
+This folder contains one database configuration file and two python files.
+
+* tournament.sql -  This file is used to set up database schema.
+* tournament.py - This file is a library of functions to provide access to the database for adding, deleting or querying data from a client program.
+* tournament_test.py - This is a client program to verify functions in the tournament.py.
+
+To start this application:
+
+1. Run tournament.sql from psql by following command "\i tournament.sql". That works to build a tournament database, players and matches tables.
+2. Then run tournament_test.py to verify functions in tournament.py to manage players and games.
+3. After running the test script, you will see results of 10 tests.
 
