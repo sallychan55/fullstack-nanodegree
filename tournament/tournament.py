@@ -41,7 +41,7 @@ def countPlayers():
     total = cursor.fetchone();
     db.close()
 
-    return total[0]  # TODO: check if query returns None
+    return total[0]
 
 
 def registerPlayer(name):
