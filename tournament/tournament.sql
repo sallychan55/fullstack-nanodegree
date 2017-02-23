@@ -20,18 +20,22 @@ CREATE DATABASE tournament;
 
 -- players table
 CREATE TABLE players (
-	id SERIAL UNIQUE,
+	id SERIAL PRIMARY KEY,
 	name TEXT NOT NULL
 );
+
+-- register a dummy player for bye game
+INSERT into players values (0, 'bye game');
 
 -- delete table if it exists
 --DROP TABLE IF EXISTS matches;
 
 -- matches table
 CREATE TABLE matches (
-	game_id SERIAL UNIQUE,
+	game_id SERIAL PRIMARY KEY,
 	winner INT REFERENCES players(id) ON DELETE CASCADE,
-	loser INT REFERENCES players(id) ON DELETE CASCADE
+	loser INT REFERENCES players(id) ON DELETE CASCADE,
+	CHECK (winner <> loser)
 );
 
 
@@ -48,6 +52,7 @@ CREATE VIEW wins
 AS
 	SELECT players.id, players.name, count(matches.winner) AS wins 
 	FROM players LEFT JOIN matches ON players.id = matches.winner
+	WHERE players.id != 0
 	GROUP BY players.id, players.name
 	ORDER BY wins DESC;
 
@@ -56,6 +61,7 @@ CREATE VIEW losses
 AS
 	SELECT players.id, players.name, count(matches.loser) AS losses 
 	FROM players LEFT JOIN matches ON players.id = matches.loser
+	WHERE players.id != 0
 	GROUP BY players.id, players.name
 	ORDER BY losses DESC;
 
