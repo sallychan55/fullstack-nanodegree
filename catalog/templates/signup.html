@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-dismissible alert-danger">
+    <ul>
+        {% for message in messages %}
+        <li><strong> {{ message }} </strong></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
+
+<div class="container" style="width: 300px;">
+    <h2>Please sign up</h2>
+
+    <form action="#" method="post">
+        <div class="form-group">
+            <label for="inputName" class="sr-only">User Name</label>
+            <input class="form-control" name="name" type="name" placeholder="User Name" required autofocus>
+
+            <label for="inputEmail" class="sr-only">Email address</label>
+            <input class="form-control" name="email" type="email" placeholder="Email address" required>
+            <button type="submit" class="btn btn-primary btn-block" id="submit" type="submit"> Sign up
+            </button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

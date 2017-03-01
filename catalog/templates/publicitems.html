@@ -1,0 +1,56 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div class="well well-sm">
+    <div class="container">
+        <h1>{{ shop.name }}</h1>
+        <h3 class="creator">{{ creator.name }}</h3>
+    </div>
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-danger" role="alert">
+    <ul>
+        {% for message in messages %}
+        <li><strong> {{ message }} </strong></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
+
+
+<script>
+$(document).ready(function() {
+    $('#shoppingitems').DataTable();
+} );
+
+</script>
+
+{% if items !=[] %}
+
+<table id="shoppingitems" class="table table-striped" cellspacing="0" width="100%">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for i in items %}
+    <tr>
+        <td>{{i.name}}</td>
+        <td>{{i.category}}</td>
+        <td>{{i.description}}</td>
+        <td>$ {{i.price}}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endif %}
+{% endblock %}

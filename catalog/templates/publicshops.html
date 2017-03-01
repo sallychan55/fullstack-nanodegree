@@ -1,0 +1,50 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<div class="jumbotron">
+    <div class="container">
+        <h2>Welcome to the Online Flea Market!</h2>
+        <p>This is a template for a simple marketing or informational website. It includes a large callout called a
+            jumbotron and three supporting pieces of content. Use it as a starting point to create something more
+            unique.
+        <p>
+    </div>
+</div>
+
+<div class='flash'>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li><strong> {{ message }} </strong></li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div class="alert alert-dismissible alert-success">
+    <ul>
+        {% for message in messages %}
+        <li><strong> {{ message }} </strong></li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+{% endwith %}
+
+
+<div class="list-group">
+    {% for shop in shops %}
+    <li class="list-group-item">
+        <a href="{{url_for('showItem', shop_id = shop.id)}}">
+            <h3>{{shop.name}}</h3>
+        </a>
+    </li>
+    {% endfor %}
+</div>
+
+{% endblock %}

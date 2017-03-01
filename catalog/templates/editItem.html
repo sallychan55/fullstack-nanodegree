@@ -1,0 +1,47 @@
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+
+<h2> Edit shopping item </h2>
+
+<form action="#" method="post">
+    <div class="form-group">
+        <label for="name">Name:</label>
+        <input type="text" maxlength="100" class="form-control" name="name" value="{{item.name }}">
+
+        <label for="description">Description:</label>
+        <textarea class="form-control" maxlength="250" rows="3" name="description">{{item.description}}</textarea>
+
+        <label for="price">Price:</label>
+        <div class="input-group">
+            <div class="input-group-addon">$</div>
+            <input type="text" maxlength="10" class="form-control" name="price" value="{{item.price}}">
+        </div>
+
+        <div class="form-group">
+            <label for="category">Category:</label>
+            <select class="form-control" name="category">
+                <option value="Books" {% if item.category==
+                'Books'%} selected value="Books" {%endif%}>Books</option>
+                <option value="Clothing" {% if item.category==
+                'Clothing'%} selected value="Clothing" {%endif%}>Clothing</option>
+                <option value="Electronics" {% if item.category==
+                'Electronics'%} selected value="Electronics" {%endif%}>Electronics</option>
+                <option value="Sports" {% if item.category==
+                'Sports'%} selected value="Sports" {%endif%}>Sports</option>
+                <option value="Outdoors" {% if item.category==
+                'Outdoors'%} selected value="Outdoors" {%endif%}>Outdoors</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-default" id="submit" type="submit">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Save
+        </button>
+        <a href='{{url_for(' showShops')}}'>
+        <button class="btn btn-default delete">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancel
+        </button>
+        </a>
+    </div>
+</form>
+{% endblock %}

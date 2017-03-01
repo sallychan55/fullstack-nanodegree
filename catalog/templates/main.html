@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-signin-client_id"
+          content="264013908929-ejrhhpu61jnkdge6oicvdai1o54lt8m2.apps.googleusercontent.com">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700' rel='stylesheet' type='text/css'>
+    <link rel=stylesheet href="{{ url_for('static', filename='styles.css') }}">
+    <link rel=stylesheet href="{{ url_for('static', filename='bootstrap-social.css') }}">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="//apis.google.com/js/platform.js?onload=start"></script>
+    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css">
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    {% block content %}
+    {% endblock %}
+</div>
+</body>
+</html>
