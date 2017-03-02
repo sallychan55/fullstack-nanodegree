@@ -21,16 +21,17 @@
         <div class="form-group">
             <label for="category">Category:</label>
             <select class="form-control" name="category">
-                <option value="Books" {% if item.category==
-                'Books'%} selected value="Books" {%endif%}>Books</option>
-                <option value="Clothing" {% if item.category==
-                'Clothing'%} selected value="Clothing" {%endif%}>Clothing</option>
-                <option value="Electronics" {% if item.category==
-                'Electronics'%} selected value="Electronics" {%endif%}>Electronics</option>
-                <option value="Sports" {% if item.category==
-                'Sports'%} selected value="Sports" {%endif%}>Sports</option>
-                <option value="Outdoors" {% if item.category==
-                'Outdoors'%} selected value="Outdoors" {%endif%}>Outdoors</option>
+                <option value="Books" {% if item.category=='Books'%} selected value="Books" {%endif%}>Books</option>
+                <option value="Clothing" {% if item.category=='Clothing'%} selected value="Clothing" {%endif%}>
+                    Clothing
+                </option>
+                <option value="Electronics" {% if item.category=='Electronics'%} selected value="Electronics" {%endif%}>
+                    Electronics
+                </option>
+                <option value="Sports" {% if item.category=='Sports'%} selected value="Sports" {%endif%}>Sports</option>
+                <option value="Outdoors" {% if item.category=='Outdoors'%} selected value="Outdoors" {%endif%}>
+                    Outdoors
+                </option>
             </select>
         </div>
 

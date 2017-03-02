@@ -4,6 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Shop, ShoppingItem, User
 
 from flask import session as login_session
+from functools import wraps
 import re
 import random
 import string
@@ -28,15 +29,11 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 USER_RE = re.compile(r"^[a-zA-Z0-9_-]{3,20}$")
-
-
 def valid_username(username):
     return username and USER_RE.match(username)
 
 
 EMAIL_RE = re.compile(r'^[\S]+@[\S]+\.[\S]+$')
-
-
 def valid_email(email):
     return not email or EMAIL_RE.match(email)
 
@@ -63,6 +60,15 @@ def showSignup():
     else:
         return render_template('signup.html')
 
+
+def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'username' not in login_session and 'user_id' not in login_session:
+            return redirect('/login')
+        return f(*args, **kwargs)
+
+    return decorated_function
 
 # Create anti-forgery state token
 @app.route('/login', methods=['GET', 'POST'])
@@ -300,6 +306,7 @@ def gdisconnect():
     if result['status'] == '200':
         # Reset the user's sesson.
         del login_session['access_token']
+        del login_session['user_id']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
@@ -312,6 +319,7 @@ def gdisconnect():
     else:
         # Reset the user's sesson.
         del login_session['access_token']
+        del login_session['user_id']
         del login_session['gplus_id']
         del login_session['username']
         del login_session['email']
@@ -350,17 +358,12 @@ def shopsJSON():
 @app.route('/shops/')
 def showShops():
     shops = session.query(Shop).order_by(asc(Shop.name))
-    if 'username' not in login_session:
-        return render_template('shops.html', shops=shops)
-    else:
-        return render_template('shops.html', shops=shops)
-
+    return render_template('shops.html', shops=shops)
 
 # Create a new shop
 @app.route('/shop/new/', methods=['GET', 'POST'])
+@login_required
 def newShop():
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
         newShop = Shop(
             name=request.form['name'], user_id=login_session['user_id'])
@@ -374,12 +377,12 @@ def newShop():
 
 # Edit a shop
 @app.route('/shop/<int:shop_id>/edit/', methods=['GET', 'POST'])
+@login_required
 def editShop(shop_id):
     editedShop = session.query(Shop).filter_by(id=shop_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
     if editedShop.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this shop. Please create your own shop in order to edit.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit this shop. \
+        Please create your own shop in order to edit.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name'] and request.form['name'] != editedShop.name:
             editedShop.name = request.form['name']
@@ -391,12 +394,12 @@ def editShop(shop_id):
 
 # Delete a shop
 @app.route('/shop/<int:shop_id>/delete/', methods=['GET', 'POST'])
+@login_required
 def deleteShop(shop_id):
     shopToDelete = session.query(Shop).filter_by(id=shop_id).one()
-    if 'username' not in login_session:
-        return redirect('/login')
     if shopToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this shop. Please create your own shop in order to delete.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete this shop. \
+        Please create your own shop in order to delete.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(shopToDelete)
         flash('%s Successfully Deleted' % shopToDelete.name)
@@ -413,7 +416,7 @@ def showItem(shop_id):
     shop = session.query(Shop).filter_by(id=shop_id).one()
     creator = getUserInfo(shop.user_id)
     items = session.query(ShoppingItem).filter_by(shop_id=shop_id).all()
-    if 'username' not in login_session or creator.id != login_session['user_id']:
+    if 'user_id' not in login_session or creator.id != login_session['user_id']:
         return render_template('publicitems.html', items=items, shop=shop, creator=creator)
     else:
         return render_template('items.html', items=items, shop=shop, creator=creator)
@@ -421,12 +424,12 @@ def showItem(shop_id):
 
 # Create a new shopping item
 @app.route('/shop/<int:shop_id>/items/new/', methods=['GET', 'POST'])
+@login_required
 def newShoppingItem(shop_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     shop = session.query(Shop).filter_by(id=shop_id).one()
     if login_session['user_id'] != shop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add shopping items to this shop. Please create your own shop in order to add items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to add shopping items to this shop. \
+        Please create your own shop in order to add items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         newItem = ShoppingItem(name=request.form['name'], description=request.form['description'],
                                price=request.form['price'], category=request.form['category'],
@@ -441,13 +444,13 @@ def newShoppingItem(shop_id):
 
 # Edit a shopping item
 @app.route('/shop/<int:shop_id>/item/<int:item_id>/edit', methods=['GET', 'POST'])
+@login_required
 def editShoppingItem(shop_id, item_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     editedItem = session.query(ShoppingItem).filter_by(id=item_id).one()
     shop = session.query(Shop).filter_by(id=shop_id).one()
     if login_session['user_id'] != shop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit items to this shop. Please create your own shop in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to edit items to this shop. \
+        Please create your own shop in order to edit items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         isEdited = False
         if request.form['name'] and editedItem.name != request.form['name']:
@@ -473,13 +476,13 @@ def editShoppingItem(shop_id, item_id):
 
 # Delete a shopping item
 @app.route('/shop/<int:shop_id>/item/<int:item_id>/delete', methods=['GET', 'POST'])
+@login_required
 def deleteShoppingItem(shop_id, item_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     shop = session.query(Shop).filter_by(id=shop_id).one()
     itemToDelete = session.query(ShoppingItem).filter_by(id=item_id).one()
     if login_session['user_id'] != shop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to delete items to this shop. Please create your own shop in order to delete items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() {alert('You are not authorized to delete items to this shop. \
+        Please create your own shop in order to delete items.');}</script><body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
@@ -512,4 +515,4 @@ def disconnect():
 if __name__ == '__main__':
     app.secret_key = 'super_secret_key'
     app.debug = True
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5001)
