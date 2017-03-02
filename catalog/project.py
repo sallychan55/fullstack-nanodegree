@@ -60,14 +60,12 @@ def showSignup():
     else:
         return render_template('signup.html')
 
-
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         if 'username' not in login_session and 'user_id' not in login_session:
             return redirect('/login')
         return f(*args, **kwargs)
-
     return decorated_function
 
 # Create anti-forgery state token
@@ -381,8 +379,10 @@ def newShop():
 def editShop(shop_id):
     editedShop = session.query(Shop).filter_by(id=shop_id).one()
     if editedShop.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to edit this shop. \
-        Please create your own shop in order to edit.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction()  \
+        {alert('You are not authorized to edit this shop. \
+        Please create your own shop in order to edit.');}</script> \
+        <body onload='myFunction()''>"
     if request.method == 'POST':
         if request.form['name'] and request.form['name'] != editedShop.name:
             editedShop.name = request.form['name']
@@ -398,8 +398,10 @@ def editShop(shop_id):
 def deleteShop(shop_id):
     shopToDelete = session.query(Shop).filter_by(id=shop_id).one()
     if shopToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not authorized to delete this shop. \
-        Please create your own shop in order to delete.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction()  \
+        {alert('You are not authorized to delete this shop. \
+        Please create your own shop in order to delete.');}</script> \
+        <body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(shopToDelete)
         flash('%s Successfully Deleted' % shopToDelete.name)
@@ -428,8 +430,10 @@ def showItem(shop_id):
 def newShoppingItem(shop_id):
     shop = session.query(Shop).filter_by(id=shop_id).one()
     if login_session['user_id'] != shop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to add shopping items to this shop. \
-        Please create your own shop in order to add items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() \
+        {alert('You are not authorized to add shopping items to this shop. \
+        Please create your own shop in order to add items.');}</script> \
+        <body onload='myFunction()''>"
     if request.method == 'POST':
         newItem = ShoppingItem(name=request.form['name'], description=request.form['description'],
                                price=request.form['price'], category=request.form['category'],
@@ -449,8 +453,10 @@ def editShoppingItem(shop_id, item_id):
     editedItem = session.query(ShoppingItem).filter_by(id=item_id).one()
     shop = session.query(Shop).filter_by(id=shop_id).one()
     if login_session['user_id'] != shop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to edit items to this shop. \
-        Please create your own shop in order to edit items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction() \
+        {alert('You are not authorized to edit items to this shop. \
+        Please create your own shop in order to edit items.');}</script> \
+        <body onload='myFunction()''>"
     if request.method == 'POST':
         isEdited = False
         if request.form['name'] and editedItem.name != request.form['name']:
@@ -481,8 +487,10 @@ def deleteShoppingItem(shop_id, item_id):
     shop = session.query(Shop).filter_by(id=shop_id).one()
     itemToDelete = session.query(ShoppingItem).filter_by(id=item_id).one()
     if login_session['user_id'] != shop.user_id:
-        return "<script>function myFunction() {alert('You are not authorized to delete items to this shop. \
-        Please create your own shop in order to delete items.');}</script><body onload='myFunction()''>"
+        return "<script>function myFunction()  \
+        {alert('You are not authorized to delete items to this shop. \
+        Please create your own shop in order to delete items.');}</script> \
+        <body onload='myFunction()''>"
     if request.method == 'POST':
         session.delete(itemToDelete)
         session.commit()
