@@ -1,0 +1,86 @@
+html,
+body { 
+  width: 100%;
+  height: 100%; 
+}
+
+#search {
+    position: absolute;
+    z-index: 5;
+    padding: 10px;
+    background-color: #362f27;
+    color: #fff;
+}
+
+@media screen and (orientation: portrait){
+  #search {
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 30%;
+    overflow: scroll;
+  }
+  #map {
+    height: 70%;
+    width: 100%;
+  }
+}
+  
+@media screen and (orientation: landscape){
+  #search {
+    left: 0;
+    width: 20%;
+    overflow: scroll;
+    height: 95%;
+  }
+  #map {
+    right: 0;
+    width: 90%;
+    height: 95%;
+  }
+}
+
+.MarkerPopUp {
+    height: 300px !important;
+    width: 300px !important;
+}
+#iw-container {
+    margin-bottom: 10px;
+}
+#iw-container .iw-title {
+    font-size: 22px;
+    font-weight: 400;
+    padding: 10px;
+    margin: 0;
+    border-radius: 2px 2px 0 0;
+}
+#iw-container .iw-content {
+    font-size: 13px;
+    line-height: 18px;
+    font-weight: 400;
+    margin-right: 1px;
+    padding: 15px 5px 20px 15px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.iw-content img {
+    float: right;
+    margin: 0 5px 5px 10px; 
+}
+.iw-subTitle {
+    font-size: 16px;
+    font-weight: 700;
+    padding: 5px 0;
+}
+h1 {
+  font-size: 22px;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+ul {
+  list-style-type: none;
+}
+.left {
+   width: 200px;
+   margin-right: auto;
+}
