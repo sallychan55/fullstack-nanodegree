@@ -9,11 +9,9 @@ var markers = [];
 function initMap() {
   // TODO: use a constructor to create a new map JS object. 
   map = new google.maps.Map(document.getElementById('map'), {
-    center: {lat:37, lng:-121},
+    center: {lat:37.3, lng:-121.9},
     zoom:9
   });
-
-  var ul = document.getElementById('marker_list');
   
   var largeInfowindow = new google.maps.InfoWindow();
 
@@ -21,7 +19,6 @@ function initMap() {
     {title: 'My Delicious Tiramisu', location: {lat: 37.3513641357422, lng: -121.952194213867}, id: 'my-delicious-tiramisu-santa-clara-16' },
     {title: 'Stan\'s Donut Shop', location: {lat: 37.338861954274, lng: -121.97310467526}, id: 'stans-donut-shop-santa-clara' },
     {title: 'Fairycakes', location: {lat: 37.3589414, lng: -121.9392165}, id: 'fairycakes-santa-clara' },
-    {title: 'Barbara of Pauline\'s Cake Decorating Supplies', location: {lat: 37.2938804626465, lng: -121.889755249023}, id: 'barbara-of-paulines-cake-decorating-supplies-san-jose' },
     {title: 'Not Just Cheesecakes', location: {lat: 37.287356616022, lng: -121.938364793848}, id: 'not-just-cheesecakes-campbell' },
     {title: 'Nothing Bundt Cakes', location: {lat: 37.3718548618985, lng: -122.046209806747}, id: 'nothing-bundt-cakes-sunnyvale' },
     {title: 'Hannah', location: {lat: 37.331594567997, lng: -121.905520934925}, id: 'hannah-san-jose' },
@@ -32,7 +29,6 @@ function initMap() {
     {title: 'Jen\'s Cakes', location: {lat: 37.3106, lng: -121.90302}, id: 'jens-cakes-san-jose' },
     {title: 'Linda\'s Bakery', location: {lat: 37.3442999, lng: -121.87282}, id: 'lindas-bakery-san-jose' },
     {title: 'Haleh Pastry', location: {lat: 37.28211, lng: -121.95016}, id: 'haleh-pastry-campbell' },
-    {title: 'Bill\'s Café', location: {lat: 37.34303, lng: -121.92846}, id: 'bills-café-san-jose-9' },
     {title: 'Sweet Tooth Confections', location: {lat: 37.33748, lng: -121.93846}, id: 'sweet-tooth-confections-san-jose' },
     {title: 'Bitter+Sweet', location: {lat: 37.3181638185566, lng: -122.03151641898}, id: 'bitter-sweet-cupertino' } 
   ];
@@ -56,8 +52,12 @@ function initMap() {
       if (marker.getAnimation() !== null) {
         marker.setAnimation(null);
       } else {
+        // Set bounce action with timeout
         marker.setAnimation(google.maps.Animation.BOUNCE);
-      };
+        setTimeout(function () {
+          marker.setAnimation(null);
+        }, 1400);
+      }
       populateInfoWindow(marker, largeInfowindow);
     });
 
@@ -79,6 +79,11 @@ function initMap() {
     bounds.extend(markers[i].marker.position);
   }
   map.fitBounds(bounds);
+
+  // Resize map to fit screen everytime user resizes
+  google.maps.event.addDomListener(window, 'resize', function() {
+    map.fitBounds(bounds); 
+  });
 
   // finally set map and markers into viewmodel
   ko.applyBindings(new ViewModel(map, markers));
@@ -102,18 +107,8 @@ function Pin(map, name, position, id) {
     icon: defaultIcon,
     yelp_id: id
   });
-  self.marker = marker;
-  
-  self.isVisible = ko.observable();
-  self.isVisible.subscribe(function(currentState) {
-    if (currentState) {
-      marker.setMap(map);
-    } else {
-      marker.setMap(null);
-    }
-  });
 
-  self.isVisible(true);
+  self.marker = marker;
 }
 
 // This function takes in a COLOR, and then creates a new marker
@@ -146,15 +141,25 @@ function populateInfoWindow(marker, infowindow) {
 
     // Set Yelp info
     yelpInfo(marker.yelp_id, function(data) {
+        var url, name, image, review, address, phone;
+        console.log(data)
+
+        data.url ? url = data.url : url = "";
+        data.name ? name = data.name : name = "No name";
+        data.image_url ? image = data.image_url : image = "";
+        data.snippet_text ? review = data.snippet_text : review = "No review provided";
+        data.location.address ? address = data.location.address : address = "No address available";
+        data.display_phone ? phone = data.display_phone : phone = "No phone available";
+
         var content = "<div class = 'MarkerPopUp' id='iw-container'>" +
-                      "<div class='iw-title'><a href='" + data.url + "'>" + data.name + "</a></div>" +
+                      "<div class='iw-title'><a href='" + url + "'>" + name + "</a></div>" +
                       '<div class="iw-content">' +
                        '<div class="iw-subTitle">Yelp Review</div>' +
-                       "<img src='" + data.image_url + "' height='115' width='83'></img>" +
-                       "<p>" + data.snippet_text + "</p>" +
+                       "<img src='" + image + "' height='115' width='115'></img>" +
+                       "<p>" + review + "</p>" +
                        '<div class="iw-subTitle">Contacts</div>' +
-                       "<p>" + data.location.address + "</p>" +
-                       "<p>" + data.display_phone + "</p>" +
+                       "<p>" + address + "</p>" +
+                       "<p>" + phone + "</p>" +
                       "</div>";
         infowindow.setContent(content);
     });
@@ -169,18 +174,28 @@ function ViewModel(map, markers) {
   self.pins  = ko.observableArray(markers);
   self.clickHandler = function(pin) {
     google.maps.event.trigger(pin.marker, "click");
-  }
+  };
 
   self.query = ko.observable('');
   self.filterPins = ko.computed(function () {
       var search  = self.query().toLowerCase();
 
-      console.log(self.pins().length);
+      if(!search) {
+        return ko.utils.arrayFilter(self.pins(), function (pin) { 
+          pin.marker.setVisible(true);
+          return true;
+        });
+      }
+
       return ko.utils.arrayFilter(self.pins(), function (pin) { 
           var doesMatch = pin.name().toLowerCase().indexOf(search) >= 0;
-          pin.isVisible(doesMatch);
-
+          pin.marker.setVisible(doesMatch);
           return doesMatch;
       });
   });
 }
+
+// Error handlng when fialed to load map
+function mapError() {
+  alert("The script is not accessible. Please check Google Map API link.")
+};
