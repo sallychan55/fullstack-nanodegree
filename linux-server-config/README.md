@@ -6,6 +6,8 @@ This is the final project that builds a Linux server and run the Item Catalog we
 * Ubuntu is used as a Linux server in Lightsail
 
 # Software install and configurations
+Follow below steps to install software and deploy the catalog site on a virtual server.
+
 ## Linux server setup
 First, go to [Amazon Lightsail](https://lightsail.aws.amazon.com) to make a new instance with Ubuntu.
 Once the new instance has started up, we can SSH in as the ubuntu user. Now, we have a virtual server!
@@ -178,6 +180,18 @@ Create a new user 'grader' and grant a proper access for the user. Also only all
     
    Restart apache server using `sudo service apache2 restart`
     
+## Google/Facebook login setup
+1. Create a new project to set credentials for the new URLs.
+
+   Download a json file and paste the content to update client_secret.json file
+
+2. Add new URLs into the OAuth redirect URL list on a facebook developer page
+  
+   Now, the facebook Graph API has been upgraded to version 2.8. Need to modify code to extract access_token properly and update URLs to point the latest version 2.8.
+   * [New Facebook OAuth access token](https://discussions.udacity.com/t/issues-with-facebook-oauth-access-token/233840)
+  
+Finally you can deploy the website on the vertual server!  
+  
 # References
 * [How To Add and Delete Users on an Ubuntu 14.04 VPS
 ](https://www.digitalocean.com/community/tutorials/how-to-add-and-delete-users-on-an-ubuntu-14-04-vps)
