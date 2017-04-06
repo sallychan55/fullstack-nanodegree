@@ -63,7 +63,7 @@ Create a new user 'grader' and grant a proper access for the user. Also only all
    chmod 664 .ssh/authorized_keys
    ```
    
-   Now you can SSH as grader using `ssh grader@52.200.118.181 -i ~/.ssh/your-ssh-public-key-filename` 
+   Now you can SSH as grader using `ssh grader@52.200.118.181 -i ~/.ssh/your-ssh-private-key-filename` 
 
 8. SSH port update
    Modify Post 20 to 2200 on the config by `sudo nano /etc/ssh/sshd_config`
@@ -73,7 +73,7 @@ Create a new user 'grader' and grant a proper access for the user. Also only all
    On Amazon Lightsail page, go to Network tab and add the new port in Firewall section. 
    `Application=Custom, Protocol=TCP, Port=2200`
    
-   Now, you can SSH with port 2200 using `ssh grader@52.200.118.181 -i ~/.ssh/your-ssh-public-key-filename -p 2200`.
+   Now, you can SSH with port 2200 using `ssh grader@52.200.118.181 -i ~/.ssh/your-ssh-private-key-filename -p 2200`.
    
 9. Configure the Uncomplicated Firewall (UFW)
    Set UFW to only allow incoming connections for SSH (port 2200), HTTP (port 80), and NTP (port 123) using below command.
